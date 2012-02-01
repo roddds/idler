@@ -1,3 +1,28 @@
 Team Fortress 2 Idler
 
-Todo: add documentation.
+This is a simple script that makes it easier to idle with several accounts.
+
+What this does:
+    1. Kills Steam, if it is running.
+    2. Starts Steam again, with the first account on the list.
+    3. Starts Team Fortress 2 in text mode. (You can change the parameters 
+by editing the code)
+    4. Waits for 12 hours.
+    5. Kills Team Fortress 2.
+    6. Kills Steam.
+    7. Repeats the whole process with the next account.
+    8. ?????
+    9. PROFIT
+
+What this does not:
+
+    1. Transfer items from one account to another.
+    2. Scrap banking.
+    3. Crafting weapons into scrap metal.
+
+
+    WARNING: The script is provided 'as is' without any guarantees
+whatsoever as to the actual coolness from Valve about you running this.
+This does not interfere with any Team Fortress 2 files and doesn't do
+anything you wouldn't be able to do with simple batch files, but if you
+want to stay on the safe side, don't run it.
