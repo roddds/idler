@@ -20,9 +20,15 @@ What this does not:
     2. Scrap banking.
     3. Crafting weapons into scrap metal.
 
-
     WARNING: The script is provided 'as is' without any guarantees
 whatsoever as to the actual coolness from Valve about you running this.
 This does not interfere with any Team Fortress 2 files and doesn't do
 anything you wouldn't be able to do with simple batch files, but if you
 want to stay on the safe side, don't run it.
+
+
+Files:
+
+\idler.py        The actual script.
+\config.ini      Write the path to Steam and your username:passwords here.
+\README          This file.
