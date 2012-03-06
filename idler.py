@@ -81,9 +81,15 @@ if __name__ == '__main__':
         try:
             print '\nWaiting for TF2 to launch. . .',
             tf2process = sp.Popen(tf2args)
+            timewaiting = 0
             while isrunning('hl2.exe') == False:
                 print '.',
                 time.sleep(1)
+                timewaiting += 1
+                if timewaiting > 60:
+                    print '- it seems that Steam took to long to startup or something went wrong. I will try to launch TF2 again -'
+                    kill('hl2.exe')
+                    tf2process = sp.Popen(tf2args)
             print 'done!'
         except KeyboardInterrupt:
             print 'Countdown aborted!'
