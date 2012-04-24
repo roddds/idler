@@ -65,7 +65,7 @@ if __name__ == '__main__':
         
         try:
             for i in range(1, 101):
-                sys.stdout.write('%d%%\r' % i)
+                sys.stdout.write('%d%%\r  ' % i)
                 time.sleep(0.1)
                 
             if isrunning('Steam.exe'):
