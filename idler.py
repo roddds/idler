@@ -101,7 +101,7 @@ if __name__ == '__main__':
             timeleft = 12*60*60 #12 hours
 
             while (timeleft > 0):
-                sys.stdout.write( str(datetime.timedelta(0, timeleft))+'\r' )
+                sys.stdout.write( str(datetime.timedelta(0, timeleft))+'  \r' )
                 if timeleft%5==0:
                     if isrunning('hl2.exe'):
                         pass
