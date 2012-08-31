@@ -8,122 +8,88 @@
 # Created:     01/02/2012
 # Licence:     Public Domain
 #-------------------------------------------------------------------------------
-#!/usr/bin/env python
 
-import time, datetime
 import os
 import sys
-import subprocess as sp
+import idle
+import json
 
-def isrunning(processname):
-    '''Returns True or False depending on if processname is running or
-    not. Case-sensitive.'''
-    lines = sp.Popen(['tasklist'], stdout=sp.PIPE).stdout.read().split('\r\n')
-    if any(line.startswith(processname) for line in lines):
-        return True
-    return False
-        
-def kill(processname):
-    '''Kills processname. If the subprocess launch fails, the function
-    will try to kill it with os.system, which may cause output to stdout.'''
-    try:
-        p = sp.Popen(['taskkill', '/f', '/im', processname], stdout=sp.PIPE)
-    except WindowsError:
-        os.system('taskkill /f /im %s' % processname)
-        
+class Config():
+    '''
+    Reads from the configuration file and returns an object that can be
+    accessed like a dictionary.
+    '''
+    def __init__(self):
+        cfg =  open('config.ini').read()
+        self.options = json.loads(cfg)
+    
+    def __call__(self):
+        return self.options
+    def __getitem__(self, i):
+        return self.options[i]
+    def __enter__(self):
+        return self
+    def __exit__(self, *exc_info):
+        pass
+
+
 if __name__ == '__main__':
-    #startup
-    config = open('config.ini').read().split('\n')
-    steampath = config[0].split('=')[1]
-    credentials = {}
-    for pair in config[1].split('=')[1].split(';'):
-        pair = pair.split(':')
+    from menu import menu
+    import WConio; WConio.setcursortype(0)
+
+    config = Config()
+   
+    if not os.path.exists(config['steampath']):
+        raise SystemExit('steam.exe not found. Did you check your preferences?\n')
+
+    if '-login' in sys.argv:
+        import subprocess as sp
+
+        if idle.isrunning('hl2.exe'):
+           idle.kill('hl2.exe')
+        if idle.isrunning('steam.exe'):
+           idle.kill('steam.exe')        #kills Steam and TF2 wether they're running or not
+        
+        username = sys.argv[-1]
         try:
-            credentials[pair[0]] = pair[1]
-        except IndexError:
-            print 'Malformed credentials list. The correct format is:'
-            print 'accounts=username:password;username2:password2'
+            password = config['accounts'][sys.argv[-1]]['password']
+        except KeyError:
+            print "\nNo login information for that account found. Did you type your username in"
+            print "correctly? You might be typing in the SteamCommunity name, but we need the actual"
+            print "login name for the account."
             sys.exit(0)
-    os.chdir(steampath)
-    
-    print len(credentials), 'account(s) identified.'
-    
-    for username in credentials:
-        password = credentials[username]
-        steamargs = 'steam.exe -silent -login {0} {1}'.format(username, password).split(' ')
-        tf2args   = 'steam.exe -applaunch 440 -console -textmode -novid -nosound -nopreload -nojoy -noshader +map_background ctf_2fort'.split(' ')
 
-        print 'Logging in with account', username
+        launchargs = config['steampath'] + ' -silent -login {0} {1}'.format(username, password)
+        print 'Launching account %s...' % username
+        sp.Popen(launchargs)
+
+    elif '-start' in sys.argv:
+        import subprocess as sp
+
+        if not idle.isrunning('steam.exe'):
+            raise SystemExit("Steam is not running. Please run this without arguments to select an account.")
+
+        launchargs = config['steampath']+' -applaunch 440 -console -textmode -novid -nosound -noipx -nopreload -nojoy -noshader +map_background ctf_2fort'
+        print 'Launching idler'
+        sp.Popen(launchargs)
+
+    elif '-continue' in sys.argv:
+        idle.continueidling(config)
+
+    else: #no valid arguments
+        print len(config['accounts']), 'account(s) identified.\n'
+
+        usernames = menu( ['Idle with all accounts'] + sorted(list(config['accounts'].iterkeys())) + ['Exit'] )
+
+        if usernames == 'Idle with all accounts':
+            for name, password in [(name, config['accounts'][name]['password']) for name in config['accounts']]:
+                idle.startup(name, config)
+
+            print 'Finished idling for all accounts!'
+        elif (usernames == 'Exit') or ('Exit' in usernames):
+            pass
+        else:
+            for name in usernames:
+                idle.startup(name, config)
         
-        if isrunning('Steam.exe'):
-            print 'Steam is running. Killing...'
-            os.system('taskkill /f /im steam.exe')
-
-        steamprocess = sp.Popen(steamargs)
-
-        print 'Waiting for Steam to startup, press Ctrl+C to abort everything.'
-        
-        try:
-            for i in range(1, 101):
-                sys.stdout.write('%d%%\r  ' % i)
-                time.sleep(0.1)
-                
-            if isrunning('Steam.exe'):
-                pass
-            else:
-                print 'Steam has failed to startup. Check your account credentials and your internet connection.'
-                print 'Leaving...'
-                sys.exit(0)
-        except KeyboardInterrupt:
-            print 'Leaving...'
-            sys.exit(0)
-            
-        try:
-            print '\nWaiting for TF2 to launch. . .',
-            tf2process = sp.Popen(tf2args)
-            timewaiting = 0
-            while isrunning('hl2.exe') == False:
-                print '.',
-                time.sleep(1)
-                timewaiting += 1
-                if timewaiting > 60:
-                    print '- it seems that Steam took to long to startup or something went wrong. I will try to launch TF2 again -'
-                    kill('hl2.exe')
-                    tf2process = sp.Popen(tf2args)
-            print 'done!'
-        except KeyboardInterrupt:
-            print 'Countdown aborted!'
-            sys.exit()
-        
-        try:
-            print 'Press Ctrl+C to finish idling. Hours until finished:'
-            
-            timeleft = 12*60*60 #12 hours
-
-            while (timeleft > 0):
-                sys.stdout.write( str(datetime.timedelta(0, timeleft))+'  \r' )
-                if timeleft%5==0:
-                    if isrunning('hl2.exe'):
-                        pass
-                    else:
-                        print 'Team Fortress has stopped running. Exiting...'
-                        break
-                timeleft -= 1
-                time.sleep(1.0)
-        except KeyboardInterrupt:
-            print 'Idling aborted!'
-
-        if isrunning('hl2.exe'):
-            print 'Closing Team Fortress...',
-            kill('hl2.exe')
-            print 'Finished!'
-        
-        if isrunning('Steam.exe'):
-            print 'Closing Steam...'
-            try:
-                steamprocess.kill()
-            except WindowsError:
-                kill('Steam.exe')
-        print 'Finished idling for account %s!' % username
-
-    print 'Finished idling for all accounts!'
+        WConio.setcursortype(1)
