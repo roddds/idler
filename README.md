@@ -96,10 +96,10 @@ Dependencies:
 - WConio  
 http://newcenturycomputers.net/projects/wconio.html
 
-- Python Win32 Extensions  
+- Python Win32 Extensions (only used by the `-continue` option on `idler.py`).
 http://sourceforge.net/projects/pywin32/
 
--  This software uses the `tf2webappy` library by Swixel.  
+- This software uses the `tf2webappy` library by Swixel.  
 https://github.com/swixel/tf2webappy
 
 ---------------------------------
