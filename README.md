@@ -91,7 +91,10 @@ Files:
     \menu.py         Renders the menu you see after running idler.py.
     \README          This file.
 
-Dependencies:
+Dependencies and Requirements:  
+
+- A Steam Web API key. You can get one at:  
+http://steamcommunity.com/dev/apikey
 
 - WConio  
 http://newcenturycomputers.net/projects/wconio.html
