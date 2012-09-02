@@ -108,7 +108,7 @@ http://sourceforge.net/projects/pywin32/
 http://docs.python-requests.org/en/latest/index.html
 
 
--  This software uses the `tf2webappy` library by Swixel.  
+-  This software uses the `tf2webappy` library by Swixel (already included).  
 https://github.com/swixel/tf2webappy
 
 ---------------------------------
