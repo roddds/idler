@@ -81,7 +81,7 @@ if __name__ == '__main__':
 
         usernames = menu( ['Idle with all accounts'] + sorted(list(config['accounts'].iterkeys())) + ['Exit'] )
 
-        if usernames == 'Idle with all accounts':
+        if usernames == ['Idle with all accounts']:
             for name, password in [(name, config['accounts'][name]['password']) for name in config['accounts']]:
                 idle.startup(name, config)
 
