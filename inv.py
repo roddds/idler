@@ -1,7 +1,7 @@
 import tf2 as tf2webappy
 import urllib2 #for exception catching
 import requests
-import simplejson as json
+import json
 
 ignored = [u'Mann Co. Supply Crate',            # You can add to this list items that you don't
            u'Noise Maker - Winter Holiday',     # care about if they're on your inventory or not
