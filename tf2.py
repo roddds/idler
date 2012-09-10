@@ -149,13 +149,21 @@ class Backpack(object):
 
     def _process_items(self):
         """ Internal process function """
-        items = self.data['result']['items']['item'] # wtf valve? items->item?
+        try:
+            items = self.data['result']['items']['item'] # wtf valve? items->item?
+        except KeyError:
+            raise ValueError('Private or empty backpack')
+
         self.count = len(items)
         for item in items:
             d = {}
             del item['id'] # yep...
             schema_data = self._get_schema_item(item['defindex'])
             d['item_name'] = schema_data['item_name']
+
+            if d['item_name'] == u"Mann Co. Supply Crate": #added by roddds
+                d['item_name'] += ' #%s' % int(item['attributes']['attribute'][0]['float_value'])
+
             d['item_slot'] = schema_data['item_slot']
             i = _decimal_to_binary(item['inventory'])
             equipped = self._bin_to_class(i[7:16])
