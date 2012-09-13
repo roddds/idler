@@ -76,6 +76,13 @@ if __name__ == '__main__':
     elif '-continue' in sys.argv:
         idle.continueidling(config)
 
+    elif '-infinite' in sys.argv: #very rough implementation
+        print len(config['accounts']), 'account(s) identified.\n'
+        
+        while True:
+            for username in sorted(list(config['accounts'].iterkeys())):
+                idle.startup(username, config)
+
     else: #no valid arguments
         print len(config['accounts']), 'account(s) identified.\n'
 
