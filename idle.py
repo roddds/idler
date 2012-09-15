@@ -14,7 +14,7 @@ class Log():
         try:
             self.logfile = open(logfile, 'a')
         except IOError:
-            raise SystemExit('Logfile not found! Did you check your preferences?')
+            self.logfile = open(logfile, 'w')
         self.username = username
 
     def now(self):
