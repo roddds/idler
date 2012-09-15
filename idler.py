@@ -35,8 +35,6 @@ class Config():
 
 
 if __name__ == '__main__':
-    from menu import menu
-    import WConio; WConio.setcursortype(0)
     updater.update()
 
     config = Config()
@@ -47,19 +45,19 @@ if __name__ == '__main__':
     if '-login' in sys.argv:
         import subprocess as sp
 
-        if idle.isrunning('hl2.exe'):
-           idle.kill('hl2.exe')
-        if idle.isrunning('steam.exe'):
-           idle.kill('steam.exe')        #kills Steam and TF2 wether they're running or not
-        
         username = sys.argv[-1]
         try:
             password = config['accounts'][sys.argv[-1]]['password']
         except KeyError:
             print "\nNo login information for that account found. Did you type your username in"
-            print "correctly? You might be typing in the SteamCommunity name, but we need the actual"
-            print "login name for the account."
+            print "correctly? You might be typing in the SteamCommunity name, but we need the"
+            print "actual login name for the account."
             sys.exit(0)
+        
+        if idle.isrunning('hl2.exe'):
+           idle.kill('hl2.exe')
+        if idle.isrunning('steam.exe'):
+           idle.kill('steam.exe')        #kills Steam and TF2 wether they're running or not
 
         launchargs = config['steampath'] + ' -silent -login {0} {1}'.format(username, password)
         print 'Launching account %s...' % username
@@ -86,6 +84,8 @@ if __name__ == '__main__':
                 idle.startup(username, config)
 
     else: #no valid arguments
+        from menu import menu
+        import WConio; WConio.setcursortype(0)
         print len(config['accounts']), 'account(s) identified.\n'
 
         usernames = menu( ['Idle with all accounts'] + sorted(list(config['accounts'].iterkeys())) + ['Exit'] )
