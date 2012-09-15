@@ -100,7 +100,7 @@ http://steamcommunity.com/dev/apikey
 http://newcenturycomputers.net/projects/wconio.html
 
 
-- Python Win32 Extensions (only used by the `-continue` option on `idler.py`).  
+- Python Win32 Extensions
 http://sourceforge.net/projects/pywin32/
 
 

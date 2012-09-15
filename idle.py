@@ -3,6 +3,7 @@ import os
 import sys
 import subprocess as sp
 import inv
+import toaster
 
 
 if __name__ == '__main__':
@@ -15,6 +16,8 @@ class Log():
             self.logfile = open(logfile, 'a')
         except IOError:
             self.logfile = open(logfile, 'w')
+        except:
+            raise SystemExit('Could not locate or open the log file. Check your preferences.')
         self.username = username
 
     def now(self):
@@ -147,10 +150,11 @@ def startup(username, config):
 
 
 def idle(username, config):
-    hours          =  config['hours']
-    apikey         =  config['apikey']
-    log            =  Log(config['logfile'], username)
-    steamcommunity =  config['accounts'][username]['steamcommunity']
+    balloon        = toaster.toaster()
+    hours          = config['hours']
+    apikey         = config['apikey']
+    log            = Log(config['logfile'], username)
+    steamcommunity = config['accounts'][username]['steamcommunity']
 
     start          = datetime.datetime.now()
     timeleft       = start+datetime.timedelta(hours=hours)
@@ -184,6 +188,7 @@ def idle(username, config):
 
                 for item in [item for item in newunplaced if item not in founditems]:
                     log.stdout('%s - Found %s\n' % (currenttime, item)) #change currenttime to reflect actual real time
+                    balloon.show_balloon('Your account %s has found a %s' % (username, item))
                     founditems.append(item) #test
                     lastdrop = lastdrop.now()
 
