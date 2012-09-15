@@ -6,13 +6,14 @@
 # Author:      roddds
 #
 # Created:     01/02/2012
-# Licence:     Public Domain
+# Licence:     Public Domain, except when noted otherwise.
 #-------------------------------------------------------------------------------
 
 import os
 import sys
 import idle
 import json
+import updater
 
 class Config():
     '''
@@ -36,6 +37,7 @@ class Config():
 if __name__ == '__main__':
     from menu import menu
     import WConio; WConio.setcursortype(0)
+    updater.update()
 
     config = Config()
    
