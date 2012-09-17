@@ -196,22 +196,22 @@ def idle(username, config):
                     log.write("It's been 2 hours since the last drop. I guess we're done here!")
                     break
 
-        except KeyboardInterrupt:
-            print 'Time of the last drop:    %s' % lastdrop.strftime('%H:%M:%S')
-            print 'Drops found:            \n%s' % str(founditems)
-            print 'Current time:             %s' % datetime.datetime.now().strftime('%H:%M:%S')
-            print 'Time left until finished: %s' % str((timeleft-start.now())).split('.')[0]
-            print 'Will wait for more:       %s' % datetime.timedelta(seconds=7200 - (datetime.datetime.now()-lastdrop).seconds)
+    except KeyboardInterrupt:
+        print 'Time of the last drop:    %s' % lastdrop.strftime('%H:%M:%S')
+        print 'Drops found:            \n%s' % str(founditems)
+        print 'Current time:             %s' % datetime.datetime.now().strftime('%H:%M:%S')
+        print 'Time left until finished: %s' % str((timeleft-start.now())).split('.')[0]
+        print 'Will wait for more:       %s' % datetime.timedelta(seconds=7200 - (datetime.datetime.now()-lastdrop).seconds)
 
-            answer = raw_input('\nDo you want to quit idling? (y/n): ').lower()
-            if not answer:
-                pass
-            if answer == 'y':
-                timeleft = start+datetime.timedelta(seconds=1)
-                log.write('Idling aborted!')
-            if answer == 'n':
-                print 'Ok, keep going!'
-                pass
+        answer = raw_input('\nDo you want to quit idling? (y/n): ').lower()
+        if not answer:
+            pass
+        if answer == 'y':
+            timeleft = start+datetime.timedelta(seconds=1)
+            log.write('Idling aborted!')
+        if answer == 'n':
+            print 'Ok, keep going!'
+            pass
 
     if isrunning('hl2.exe'):
         log.write('Closing Team Fortress...',)
