@@ -3,7 +3,6 @@ import os
 import sys
 import subprocess as sp
 import inv
-import toaster
 
 
 if __name__ == '__main__':
@@ -150,7 +149,6 @@ def startup(username, config):
 
 
 def idle(username, config):
-    balloon        = toaster.toaster()
     hours          = config['hours']
     apikey         = config['apikey']
     log            = Log(config['logfile'], username)

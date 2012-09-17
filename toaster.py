@@ -96,17 +96,16 @@ class toaster:
         #print "Ready. Click on the Python icon."
 
     def OnTaskbarNotify(self, hwnd, msg, wparam, lparam):
-        pass
-        # if lparam==win32con.WM_LBUTTONUP or lparam==win32con.WM_RBUTTONUP: #if left or right click
-            # print "Click."
-            # menu = gui.CreatePopupMenu()
-            # gui.AppendMenu( menu, win32con.MF_STRING, 1024, "Generate balloon") # this is where you define the actions
-            # gui.AppendMenu( menu, win32con.MF_STRING, 1025, "Exit")             # for the right-click menu
-            # pos = gui.GetCursorPos()                                            # but we dont need them now
-            # gui.SetForegroundWindow(self.hwnd)
-            # gui.TrackPopupMenu(menu, win32con.TPM_LEFTALIGN, pos[0], pos[1], 0, self.hwnd, None)
-            # gui.PostMessage(self.hwnd, win32con.WM_NULL, 0, 0)
-            # return 1
+        if lparam==win32con.WM_LBUTTONUP or lparam==win32con.WM_RBUTTONUP: #if left or right click
+            #print "Click."
+            menu = gui.CreatePopupMenu()
+            #gui.AppendMenu( menu, win32con.MF_STRING, 1024, "Generate balloon") # this is where you define the actions
+            gui.AppendMenu( menu, win32con.MF_STRING, 1024, "Exit")             # for the right-click menu
+            pos = gui.GetCursorPos()
+            gui.SetForegroundWindow(self.hwnd)
+            gui.TrackPopupMenu(menu, win32con.TPM_LEFTALIGN, pos[0], pos[1], 0, self.hwnd, None)
+            gui.PostMessage(self.hwnd, win32con.WM_NULL, 0, 0)
+            return 1
 
     def show_balloon(self, message):
         #timer.kill_timer(3) # one-shot timer!
@@ -129,9 +128,9 @@ class toaster:
         Shell_NotifyIcon(gui.NIM_MODIFY, nid.pack())
 
     def OnCommand(self, hwnd, msg, wparam, lparam):
-        pass
-        # we don't need these for now
-        # id = gui.LOWORD(wparam)
+        id = gui.LOWORD(wparam)
+        if id == 1024:
+            gui.DestroyWindow(self.hwnd)
         # if id == 1024:
             # self.enqueue_balloon()
         # elif id == 1025:
@@ -139,6 +138,9 @@ class toaster:
             # gui.DestroyWindow(self.hwnd)
         # else:
             # print "OnCommand for ID", id
+
+    def Destroy(self, hwnd):
+        gui.DestroyWindow(self.hwnd)
 
     def OnDestroy(self, hwnd, msg, wparam, lparam):
         nid = (self.hwnd, 0)
@@ -148,8 +150,7 @@ class toaster:
 def main():
     w = toaster()
     w.show_balloon('hello world!')
-    raw_input()
-    # gui.PumpMessages()
+    #gui.PumpMessages()
 
 if __name__=='__main__':
     main()
