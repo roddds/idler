@@ -168,8 +168,8 @@ def idle(username, config):
         log.stdout('- Backpack unavailable at startup. This may be temporary.\n')
         founditems = []
 
-    while start.now() < timeleft and start.now() < lastdrop+datetime.timedelta(hours=2): #while the current time is smaller than a fixed point in the future
-        try:
+    try:
+        while start.now() < timeleft and start.now() < lastdrop+datetime.timedelta(hours=2): #while the current time is smaller than a fixed point in the future
             currenttime = str((timeleft-start.now())).split('.')[0]
             sys.stdout.write(currenttime+'  \r' )
 
