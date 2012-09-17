@@ -4,8 +4,6 @@ import requests
 import zipfile
 import os
 
-
-
 def update():
     url = 'https://api.github.com/repos/roddds/idler'
     download = 'https://github.com/roddds/idler/zipball/master'
@@ -43,3 +41,6 @@ def update():
     else:
         print 'Idler is up to date with the current version.'
         return False
+
+if __name__ == '__main__':
+    update()
