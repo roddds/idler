@@ -118,7 +118,7 @@ def startup(username, config):
 
     steamprocess = sp.Popen(launchargs)
 
-    sys.stdout.write('Waiting for Steam to startup, press Ctrl+C to abort everything.\n')
+    sys.stdout.write('Waiting for Steam to startup, press Ctrl+C to skip this account.\n')
     start    = datetime.datetime.now()
 
     try:
@@ -134,7 +134,7 @@ def startup(username, config):
             time.sleep(5)
 
             if (start.now()-start).seconds > 60*5: # every 5 minutes # is also a hack but should do
-                sys.stdout.write("- it's taking more than it should, I'll try to restart the whole thing - ")
+                sys.stdout.write("\nIt's taking more than it should, I'll try to restart the whole thing.\n")
                 kill('hl2.exe')
                 kill('steam.exe')
                 steamprocess = sp.Popen(launchargs)
@@ -149,6 +149,7 @@ def startup(username, config):
 
 
 def idle(username, config):
+    from menu import menu
     hours          = config['hours']
     apikey         = config['apikey']
     log            = Log(config['logfile'], username)
@@ -158,7 +159,6 @@ def idle(username, config):
     timeleft       = start+datetime.timedelta(hours=hours)
     lastdrop       = datetime.datetime.now()  # set lastdrop time to startup time
     
-    log.write("Press Ctrl+C to finish idling. I'll be done at around %s" % timeleft.strftime('%H:%M:%S'))
 
     try: # check if there are any still unplaced items
         founditems = inv.viewinv(steamcommunity, apikey, getunplaced=True)
@@ -168,8 +168,10 @@ def idle(username, config):
         log.stdout('- Backpack unavailable at startup. This may be temporary.\n')
         founditems = []
 
-    try:
-        while start.now() < timeleft and start.now() < lastdrop+datetime.timedelta(hours=2): #while the current time is smaller than a fixed point in the future
+    log.write("I'll be done at around %s. Press Ctrl+C to show the options." % timeleft.strftime('%H:%M:%S'))
+    
+    while start.now() < timeleft and start.now() < lastdrop+datetime.timedelta(hours=2): #while the current time is smaller than a fixed point in the future
+        try:
             currenttime = str((timeleft-start.now())).split('.')[0]
             sys.stdout.write(currenttime+'  \r' )
 
@@ -196,22 +198,31 @@ def idle(username, config):
                     log.write("It's been 2 hours since the last drop. I guess we're done here!")
                     break
 
-    except KeyboardInterrupt:
-        print 'Time of the last drop:    %s' % lastdrop.strftime('%H:%M:%S')
-        print 'Drops found:            \n%s' % str(founditems)
-        print 'Current time:             %s' % datetime.datetime.now().strftime('%H:%M:%S')
-        print 'Time left until finished: %s' % str((timeleft-start.now())).split('.')[0]
-        print 'Will wait for more:       %s' % datetime.timedelta(seconds=7200 - (datetime.datetime.now()-lastdrop).seconds)
+        except KeyboardInterrupt:
+            print '\nTime of the last drop:    %s' % lastdrop.strftime('%H:%M:%S')
+            print 'Drops found:              \n%s' % str(founditems)
+            print 'Current time:               %s' % datetime.datetime.now().strftime('%H:%M:%S')
+            print 'Time left until finished:   %s' % str((timeleft-start.now())).split('.')[0]
+            print 'Will wait for more:         %s' % datetime.timedelta(seconds=7200 - (datetime.datetime.now()-lastdrop).seconds)
 
-        answer = raw_input('\nDo you want to quit idling? (y/n): ').lower()
-        if not answer:
-            pass
-        if answer == 'y':
-            timeleft = start+datetime.timedelta(seconds=1)
-            log.write('Idling aborted!')
-        if answer == 'n':
-            print 'Ok, keep going!'
-            pass
+            print '\nWhat would you like to do?'
+            options = ['Finish idling with this account',
+                       'Finish idling with all accounts',
+                       'Nothing']
+
+            answer = menu(options)[0]
+            
+            if options.index(answer) == 0:
+                timeleft = start+datetime.timedelta(seconds=1)
+                log.write('Idling with %s aborted!' % username)
+            elif options.index(answer) == 1:
+                log.write('Idling aborted!')
+                kill('hl2.exe')
+                kill('steam.exe')
+                raise(SystemExit)
+            else:
+                print 'Ok, keep going!'
+                pass
 
     if isrunning('hl2.exe'):
         log.write('Closing Team Fortress...',)
