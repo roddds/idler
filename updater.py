@@ -1,12 +1,10 @@
-#updater.py
-
 import requests
 import zipfile
 import os
 
 def update():
-    url = 'https://api.github.com/repos/roddds/idler'
-    download = 'https://github.com/roddds/idler/zipball/master'
+    url = 'https://nodeload.github.com/roddds/idler/zipball/master'
+    download = 'https://nodeload.github.com/roddds/idler/zipball/master'
     
     try:
         currentversion = open('lastversion.txt', 'r').read()    
@@ -19,11 +17,10 @@ def update():
     if version != currentversion: #u'2012-09-10T13:49:24Z' as of now
         print 'Update found!'
 
-        with open('lastversion.txt', 'w') as lv:
-            lv.write(version)
-
         print 'Downloading new version'
         r = requests.get(download)
+
+
         open('idler.zip', 'wb').write(r.raw.data)
         #zf = zipfile.ZipFile('idler.zip')
 
@@ -35,6 +32,8 @@ def update():
                     print 'Updated %s' % f.filename
             print 'Finished!'
         
+        with open('lastversion.txt', 'w') as lv:
+            lv.write(version)
         os.remove('idler.zip') # cleanup
         return True
 
