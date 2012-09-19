@@ -3,7 +3,7 @@ import zipfile
 import os
 
 def update():
-    url = 'https://nodeload.github.com/roddds/idler/zipball/master'
+    reponifo = 'https://api.github.com/repos/roddds/idler'
     download = 'https://nodeload.github.com/roddds/idler/zipball/master'
     
     try:
@@ -11,8 +11,7 @@ def update():
     except IOError:
         currentversion = ''
 
-    # stats = json.load(urllib2.urlopen(url))
-    version = requests.get(url).json['pushed_at']
+    version = requests.get(reponifo).json['pushed_at']
 
     if version != currentversion: #u'2012-09-10T13:49:24Z' as of now
         print 'Update found!'
