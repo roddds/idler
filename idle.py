@@ -134,7 +134,7 @@ def startup(username, config):
             time.sleep(5)
 
             if (start.now()-start).seconds > 60*5: # every 5 minutes # is also a hack but should do
-                sys.stdout.write("\nIt's taking more than it should, I'll try to restart the whole thing.\n")
+                sys.stdout.write("- it's taking more than it should, I'll try to restart the whole thing - ")
                 kill('hl2.exe')
                 kill('steam.exe')
                 steamprocess = sp.Popen(launchargs)
@@ -168,7 +168,7 @@ def idle(username, config):
         log.stdout('- Backpack unavailable at startup. This may be temporary.\n')
         founditems = []
 
-    log.write("I'll be done at around %s. Press Ctrl+C to show the options." % timeleft.strftime('%H:%M:%S'))
+    log.write("Press Ctrl+C to finish idling. I'll be done at around %s" % timeleft.strftime('%H:%M:%S'))
     
     while start.now() < timeleft and start.now() < lastdrop+datetime.timedelta(hours=2): #while the current time is smaller than a fixed point in the future
         try:
@@ -210,7 +210,7 @@ def idle(username, config):
                        'Finish idling with all accounts',
                        'Nothing']
 
-            answer = menu(options)[0]
+            answer = menu(options, deletepreviouslines=7)[0]
             
             if options.index(answer) == 0:
                 timeleft = start+datetime.timedelta(seconds=1)
@@ -221,7 +221,6 @@ def idle(username, config):
                 kill('steam.exe')
                 raise(SystemExit)
             else:
-                print 'Ok, keep going!'
                 pass
 
     if isrunning('hl2.exe'):
