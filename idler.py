@@ -35,7 +35,11 @@ class Config():
 
 
 if __name__ == '__main__':
-    updater.update()
+    try:
+        updater.update()
+    except Exception as e:
+        print 'Error found while trying to download update:'
+        print e.message
 
     config = Config()
    
