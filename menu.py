@@ -1,4 +1,5 @@
 import WConio
+import sys
 
 # This whole thing is a hack. I should probably OOp it out and stuff.
 
@@ -24,11 +25,12 @@ def draw(options, d): #Spaghetti code. I'm not proud of it.
         _otr()
         print(i)
 
-def menu(options):
+def menu(options, deletepreviouslines=0):
     _sel()
     _otr() # Initialize terminal conditions
 
     home = WConio.wherey() # Gets original y coordinate
+    startup = home - deletepreviouslines - 2
     y = 0
     draw(options, y)
     multiple = []
@@ -55,6 +57,12 @@ def menu(options):
         draw(options,y)
 
     _otr()
+
+    for i in range(WConio.wherey(), startup, -1):
+        WConio.gotoxy(0, i)
+        sys.stdout.write(' '*WConio.gettextinfo()[8])
+    WConio.gotoxy(0, startup)
+
     if len(multiple)>0:
         return multiple
     else:
