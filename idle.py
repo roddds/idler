@@ -188,7 +188,7 @@ def idle(username, config):
 
                 for item in [item for item in newunplaced if item not in founditems]:
                     log.stdout('%s - Found %s\n' % (currenttime, item)) #change currenttime to reflect actual real time
-                    balloon.show_balloon('Your account %s has found a %s' % (username, item))
+                    #balloon.show_balloon('Your account %s has found a %s' % (username, item))
                     founditems.append(item) #test
                     lastdrop = lastdrop.now()
 

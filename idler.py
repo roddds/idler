@@ -90,7 +90,7 @@ if __name__ == '__main__':
     else: #no valid arguments
         from menu import menu
         from toaster import toaster
-        balloon = toaster()
+        #balloon = toaster()
 
         import WConio; WConio.setcursortype(0)
         print len(config['accounts']), 'account(s) identified.\n'
