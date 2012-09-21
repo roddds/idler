@@ -83,6 +83,7 @@ def viewinv(username, APIKEY, getunplaced=False, everything=False):
 
     bp = sorted(['* %s' % hat if hat not in weapons else '  %s' % hat for hat in bp]) #adds an asterisk to the name if it's not a normal weapon
     bp = [item.encode('latin') for item in bp]
+    return bp
 
 
 if __name__ == '__main__':
