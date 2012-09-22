@@ -64,6 +64,8 @@ def viewinv(username, APIKEY, getunplaced=False, everything=False):
         API.getBackpack(USER)
     except urllib2.HTTPError as error:
         raise ValueError('503: Service Unavailable')
+    except urllib2.URLError:
+        raise ValueError('The remote host closed the connection.')
 
     weapons = [x['item_name'] for x in API.schema['result']['items']['item'] if x.get('craft_class') == 'weapon' or x.get('craft_material_type') == 'weapon']
 
