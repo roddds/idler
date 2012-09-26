@@ -80,6 +80,7 @@ class toaster:
         wc.lpszClassName = "IdlerPopupHandler"
         wc.lpfnWndProc = message_map # could also specify a wndproc.
         classAtom = gui.RegisterClass(wc)
+        self.classAtom = classAtom
         # Create the Window.
         style = win32con.WS_OVERLAPPED | win32con.WS_SYSMENU
         self.hwnd = gui.CreateWindow( classAtom, "Idling Notifications", style,  \
@@ -139,8 +140,9 @@ class toaster:
         # else:
             # print "OnCommand for ID", id
 
-    def Destroy(self, hwnd):
+    def Destroy(self):
         gui.DestroyWindow(self.hwnd)
+        gui.UnregisterClass(self.classAtom, None)
 
     def OnDestroy(self, hwnd, msg, wparam, lparam):
         nid = (self.hwnd, 0)
