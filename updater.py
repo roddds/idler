@@ -34,8 +34,10 @@ def update():
         with open('lastversion.txt', 'w') as lv:
             lv.write(version)
         os.remove('idler.zip') # cleanup
-        if os.path.exists('schema.en.json'):
+        try:
             os.remove('schema.en.json') # force schema update
+        except WindowsError:
+            pass
         return True
 
     else:
