@@ -34,7 +34,8 @@ def update():
         with open('lastversion.txt', 'w') as lv:
             lv.write(version)
         os.remove('idler.zip') # cleanup
-        os.remove('schema.en.json') # force schema update
+        if os.path.exists('schema.en.json'):
+            os.remove('schema.en.json') # force schema update
         return True
 
     else:
