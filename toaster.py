@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Based on win32gui_taskbar demo
 
 import win32api as api
@@ -121,7 +122,7 @@ class toaster:
         # nid.dwInfoFlags = choice([NIIF_INFO, NIIF_WARNING, NIIF_ERROR])
         nid.dwInfoFlags = gui.NIIF_INFO
         # nid.szInfo = choice(["Balloon text.", "This text is nicer.", "Perl rulez! :)"])
-        nid.szInfo = message
+        nid.szInfo = message.encode('latin1')
         nid.szInfoTitle = "New drop!"
         # Call the Windows function, not the wrapped one
         from ctypes import windll

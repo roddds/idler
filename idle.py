@@ -1,6 +1,7 @@
-from idler import Config
+# -*- coding: utf-8 -*-
+import idler
+import inv
 from menu import menu
-from inv import Backpack
 from toaster import toaster
 import os
 import subprocess as sp
@@ -68,13 +69,13 @@ def kill(processname):
 class idle: #temporary name
     def __init__(self, username):
         self.username     = username
-        self.config       = Config()
+        self.config       = idler.Config()
         self.log          = Log(self.config['logfile'], self.username)
 
 
         steamid, password = self.config['accounts'][username].itervalues()
         steampath         = os.path.exists(self.config['steampath'])
-        self.inventory    = Backpack(self.config['accounts'][username]['steamcommunity'])
+        self.inventory    = inv.Backpack(self.config['accounts'][username]['steamcommunity'])
         self.tf2running   = False
         self.start        = now()
 

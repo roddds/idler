@@ -1,4 +1,6 @@
-from idler import Config
+# -*- coding: utf-8 -*-
+
+import idler
 import sys
 import json
 import requests
@@ -15,7 +17,7 @@ ignored = [u'Mann Co. Supply Crate',            # You can add to this list items
 
 class Backpack:
     def __init__(self, username):
-        self.config = Config()
+        self.config = idler.Config()
 
         self.username = username
         self.apikey   = self.config['apikey']
@@ -105,7 +107,7 @@ if __name__ == '__main__':
         everything = False
 
     if sys.argv[1] == '-all':
-        config = Config()
+        config = idler.Config()
 
         for account in config['accounts']:
             steamid = config['accounts'][account]['steamcommunity']

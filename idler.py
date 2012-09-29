@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #-------------------------------------------------------------------------------
 # Name:        idler.py
 # Purpose:     Cycles through a set list of Team Fortress 2 accounts
