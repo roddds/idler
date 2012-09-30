@@ -191,16 +191,16 @@ class idle: #temporary name
                 print 'Will wait for more:         %s' % datetime.timedelta(seconds=7200 - (now()-lastdrop).seconds)
 
                 print '\nWhat would you like to do?'
-                options = ['Finish idling with this account',
-                           'Finish idling with all accounts',
-                           'Nothing']
+                options = ['Nothing',
+                           'Finish idling with this account',
+                           'Finish idling with all accounts']
 
                 answer = menu(options, deletepreviouslines=7)[0]
                 
-                if options.index(answer) == 0:
+                if options.index(answer) == 1:
                     timeleft = self.start+datetime.timedelta(seconds=1)
                     self.log.write('Idling with %s aborted!' % self.username)
-                elif options.index(answer) == 1:
+                elif options.index(answer) == 2:
                     self.balloon.Destroy()
                     self.log.write('Idling aborted!')
                     kill('hl2.exe')
