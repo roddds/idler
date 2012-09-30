@@ -11,7 +11,11 @@ def update():
     except IOError:
         currentversion = ''
 
-    version = requests.get(reponifo).json['pushed_at']
+    try:
+        version = requests.get(reponifo).json['pushed_at']
+    except requests.exceptions.ConnectionError:
+        print "Updater couldn't connect to the update server (github.com)"
+        return False
 
     if version != currentversion: #u'2012-09-10T13:49:24Z' as of now
         print 'Update found!'
