@@ -103,38 +103,27 @@ if __name__ == '__main__':
 
     if '-full' in sys.argv:
         everything = True
+        sys.argv.remove('-full')
     else:
         everything = False
 
     if sys.argv[1] == '-all':
         config = idler.Config()
-
-        for account in config['accounts']:
-            steamid = config['accounts'][account]['steamcommunity']
-            print "\n%s's first page inventory:" % steamid
-            try:
-                items = Backpack(steamid).inventory(everything=everything)
-            except ValueError as error:
-                raise SystemExit(error.message)
-            if len(items) > 0:
-                print "%d items" % len(items)
-                try:
-                    print '\n'.join(items)
-                except UnicodeError:
-                    print '\n'.join(items).encode('utf8')
-            else:
-                print '0 items'
-
+        accounts = [config['accounts'][steamid]['steamcommunity'] for steamid in config['accounts']]
     else:
-        print "%s's first page inventory:" % sys.argv[1]
-        try:
-            items = Backpack(sys.argv[1]).inventory(everything=everything)
-        except ValueError as error:
-            print error.message
-            sys.exit(0)
+        accounts = sys.argv[1:]
 
+    for steamid in accounts:
+        print "\n%s's first page inventory:" % steamid
+        try:
+            items = Backpack(steamid).inventory(everything=everything)
+        except ValueError as error:
+            raise SystemExit(error.message)
         if len(items) > 0:
             print "%d items" % len(items)
-            print '\n'.join(items)
+            try:
+                print '\n'.join(items)
+            except UnicodeError:
+                print '\n'.join(items).encode('utf8')
         else:
             print '0 items'
