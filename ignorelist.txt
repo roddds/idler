@@ -1,0 +1,11 @@
+# Add to this file words or entire item names to add them to the filter.
+# Remember that the matching is done line by line and accepts both
+# partial and entire names, so 'Mann Co. Supply Crate' will match
+# both 'Mann Co. Supply Crate #45' and 'Mann Co. Supply Crate Key'.
+ 
+Mann Co. Supply Crate #
+Noise Maker
+Seal Mask
+Mann Co. Cap
+Mercenary
+Spirit of Giving
