@@ -51,7 +51,8 @@ logged-in account is detected automatically.
 Shows the contents of the first page of 'account's inventory, or use `-all`
 to see the inventories of all accounts in your config file. You can also add
 the `-full' argument to see the whole inventory instead of only the first
-page. Special drops like hats will have an asterisk preceding them.
+page. Special drops like hats will have an asterisk preceding them. This
+command also accepts multiple account names, separated by space.
 
 `> inv -all`
 ------------
@@ -83,13 +84,18 @@ want to stay on the safe side, don't run it.
 
 Files:
 
-    \idler.py        The actual script, plus some other functions. Launch this file.
-    \idle.py         The launcher script.
-    \inv.py          Tools for snooping on people's inventories.
-    \tf2.py          Swixel's interface for Valve's TF2 Web API.
-    \config.ini      Write the path to Steam, your API key and your username:passwords here.
-    \menu.py         Renders the menu you see after running idler.py.
-    \README          This file.
+    \idler.py          The actual script, plus some other functions. Launch this file.
+    \idle.py           The launcher script.
+    \inv.py            Tools for snooping on people's inventories.
+    \tf2.py            Swixel's interface for Valve's TF2 Web API.
+    \config.ini        Write the path to Steam, your API key and your username:passwords here.
+    \menu.py           Renders the menu you see after running idler.py.
+    \idling.log        Stores information about drops and other activity on idler.
+    \README            This file.
+    \ignorelist.txt    Add to this file names of items you don't care about (e.g Crates).
+                       Comes with a few examples you can delete or add your own.
+    \updater.py        Retrieves the latest version of this program from github.com.
+    \lastversion.txt   Contains information about the latest version of this program.
 
 Dependencies and Requirements:  
 
@@ -130,4 +136,3 @@ Example output from the log file:
     roddds - 2012-08-31 13:34:28:  Finished!
     roddds - 2012-08-31 13:34:28:  Closing Steam...
     roddds - 2012-08-31 13:34:28:  Finished idling for account roddds!
-    
