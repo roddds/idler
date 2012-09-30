@@ -11,7 +11,7 @@ What this does:
 ---------
 
 1. Shows you a list of every account you added to the config file and lets
-you choose one (or several) for sequencial idling.
+you choose one (or several) for sequencial idling.  
 1.1 You can also press the `+` key on your keyboard to add accounts to a
 queue.
 2. Kills Steam, if it is running.
