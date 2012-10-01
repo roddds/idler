@@ -153,6 +153,9 @@ class Backpack(object):
             items = self.data['result']['items']['item'] # wtf valve? items->item?
         except KeyError:
             raise ValueError('Private or empty backpack')
+            
+        if self.data['result']['items']['item'][0]==None:
+            raise ValueError('Empty backpack') #added by roddds
 
         self.count = len(items)
         for item in items:
