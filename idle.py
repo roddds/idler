@@ -169,7 +169,7 @@ class idle: #temporary name
                         newunplaced = []
 
                     for found in [item for item in newunplaced if item not in founditems]:
-                        self.log.stdout('%s - Found %s\n' % (currenttime, item)) #change currenttime to reflect actual real time
+                        self.log.stdout('%s - Found %s\n' % (currenttime, found)) #change currenttime to reflect actual real time
                         self.balloon.show_balloon('Your account {} has found a {}'.format(self.username, found))
                         founditems.append(found) #test
                         lastdrop = lastdrop.now()
