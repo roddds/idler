@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-
+import collections
+import itertools
 import idler
 import sys
 import json
@@ -42,7 +43,7 @@ class Backpack:
             req = requests.get(api_call, timeout=5)
             req.encoding = 'latin1'
         except (requests.exceptions.ConnectionError, requests.exceptions.Timeout):
-            raise ValueError("We were unable to retrieve that player's info. The SteamAPI may be down - please try again shortly.")
+            raise ValueError("We were unable to retrieve %s's info. The SteamAPI may be down - please try again shortly." % username)
             
         if not req.ok:
             raise ValueError("We were unable to retrieve that user's backpack. The URL may be wrong or the SteamAPI may be down.")
@@ -106,23 +107,42 @@ if __name__ == '__main__':
     else:
         everything = False
 
-    if sys.argv[1] == '-all':
+    if '-count' in sys.argv:
+        count = True
+        sys.argv.remove('-count')
+
+    if '-all' in sys.argv:
         config = idler.Config()
         accounts = [config['accounts'][steamid]['steamcommunity'] for steamid in config['accounts']]
     else:
         accounts = sys.argv[1:]
+        if len(accounts) <= 0:
+            raise SystemExit("We need some accounts here, bro.")
 
-    for steamid in accounts:
-        print "\n%s's first page inventory:" % steamid
-        try:
-            items = Backpack(steamid).inventory(everything=everything)
-        except ValueError as error:
-            raise SystemExit(error.message)
-        if len(items) > 0:
-            print "%d items" % len(items)
+    if count:
+        items = [Backpack(steamid).inventory(everything=True) for steamid in accounts]
+        items = list(itertools.chain.from_iterable(items))
+        counter = collections.Counter()
+        for item in items:
+            counter[item] += 1
+
+        print "Item count: %d" % len(items)
+        import pdb; pdb.set_trace()
+        for k, v in iter(sorted(counter.items(), reverse=True, key=lambda x: x[1])):
+            print "%d %s" % (v, k.replace('*', '').strip())
+    else:
+        for steamid in accounts:
             try:
-                print '\n'.join(items)
-            except UnicodeError:
-                print '\n'.join(items).encode('utf8')
-        else:
-            print '0 items'
+                items = Backpack(steamid).inventory(everything=everything)
+            except ValueError as error:
+                raise SystemExit(error.message)
+
+            print "\n%s's inventory:" % steamid
+            if len(items) > 0:
+                print "%d items" % len(items)
+                try:
+                    print '\n'.join(items)
+                except UnicodeError:
+                    print '\n'.join(items).encode('utf8')
+            else:
+                print '0 items'
