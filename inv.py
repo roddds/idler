@@ -110,6 +110,8 @@ if __name__ == '__main__':
     if '-count' in sys.argv:
         count = True
         sys.argv.remove('-count')
+    else:
+        count = False
 
     if '-all' in sys.argv:
         config = idler.Config()
