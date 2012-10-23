@@ -130,7 +130,6 @@ if __name__ == '__main__':
             counter[item] += 1
 
         print "Item count: %d" % len(items)
-        import pdb; pdb.set_trace()
         for k, v in iter(sorted(counter.items(), reverse=True, key=lambda x: x[1])):
             print "%d %s" % (v, k.replace('*', '').strip())
     else:
