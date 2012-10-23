@@ -58,7 +58,7 @@ class Backpack:
         else:
             raise ValueError("There is a problem with Valve's API.")
 
-    def inventory(self, getunplaced=False, everything=False):
+    def inventory(self, getunplaced=False, everything=False, ignorelist=True):
         '''Gets the FIRST page of a user's inventory. If the getunplaced
         flag is set to True, it'll only retrieve the items in the "unplaced"
         position, i.e. items that just dropped. The 'getunplaced' flag makes
@@ -89,7 +89,8 @@ class Backpack:
         else:
             bp = backpack+unplaced
 
-        bp = [z for z in bp if z not in [x for x in bp for y in ignorelist if y in x]]
+        if ignorelist:
+            bp = [z for z in bp if z not in [x for x in bp for y in ignorelist if y in x]]
 
         self.bp = bp
         self.items = sorted(['* %s' % hat if hat not in weapons else '  %s' % hat for hat in bp]) #adds an asterisk to the name if it's not a normal weapon
@@ -122,7 +123,7 @@ if __name__ == '__main__':
             raise SystemExit("We need some accounts here, bro.")
 
     if count:
-        items = [Backpack(steamid).inventory(everything=True) for steamid in accounts]
+        items = [Backpack(steamid).inventory(everything=True, ignorelist=False) for steamid in accounts]
         items = list(itertools.chain.from_iterable(items))
         counter = collections.Counter()
         for item in items:
