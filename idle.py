@@ -83,7 +83,7 @@ class idle: #temporary name
         self.idle()
 
     def startup(self):
-        launchargs     =  [self.config['steampath'], '-silent', '-login']
+        launchargs     =  [self.config['steampath'], '-login']
         launchargs     += [self.username]
         launchargs     += [self.config['accounts'][self.username]['password']]
         launchargs     += ['-applaunch', '440', '-console', '-textmode', '-novid', '-nosound']

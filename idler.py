@@ -60,7 +60,7 @@ class Idler:
             if idle.isrunning('steam.exe'):
                idle.kill('steam.exe')        #kills Steam and TF2 wether they're running or not
 
-            launchargs = self.config['steampath'] + ' -silent -login {0} {1}'.format(username, password)
+            launchargs = self.config['steampath'] + ' -login {0} {1}'.format(username, password)
             print 'Launching account %s...' % username
             sp.Popen(launchargs)
 
