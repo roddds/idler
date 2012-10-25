@@ -8,7 +8,7 @@ import requests
 import tf2
 import urllib2 #for exception catching
 
-ignorelist = [x for x in [line.strip() for line in open('ignorelist.txt', 'r').readlines() if line[0] != '#'] if x]
+ignore_list = [x for x in [line.strip() for line in open('ignorelist.txt', 'r').readlines() if line[0] != '#'] if x]
 
 
 class Backpack:
@@ -90,7 +90,7 @@ class Backpack:
             bp = backpack+unplaced
 
         if ignorelist:
-            bp = [z for z in bp if z not in [x for x in bp for y in ignorelist if y in x]]
+            bp = [z for z in bp if z not in [x for x in bp for y in ignore_list if y in x]]
 
         self.bp = bp
         self.items = sorted(['* %s' % hat if hat not in weapons else '  %s' % hat for hat in bp]) #adds an asterisk to the name if it's not a normal weapon

@@ -108,6 +108,7 @@ class idle: #temporary name
                 time.sleep(0.1)                  # I don't like that this try:except repeats. TODO find some other way
         except KeyboardInterrupt:
             self.log.write('Countdown aborted!')
+            return
 
         try:
             while (isrunning('hl2.exe') and isrunning('steam.exe')) != True:
@@ -122,6 +123,7 @@ class idle: #temporary name
                     self.start = now()
         except KeyboardInterrupt:
             self.log.write('Countdown aborted!')
+            return
 
         self.log.write('done!')
 
