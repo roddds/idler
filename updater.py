@@ -4,7 +4,7 @@ import os
 
 def update():
     reponifo = 'https://api.github.com/repos/roddds/idler'
-    download = 'https://nodeload.github.com/roddds/idler/zipball/master'
+    download = 'https://github.com/roddds/idler/archive/master.zip'
     
     try:
         currentversion = open('lastversion.txt', 'r').read()    
@@ -24,7 +24,8 @@ def update():
         r = requests.get(download)
 
 
-        open('idler.zip', 'wb').write(r.raw.data)
+        with open('idler.zip', 'wb') as f:
+            f.write(r.content)
         #zf = zipfile.ZipFile('idler.zip')
 
         with zipfile.ZipFile('idler.zip') as zf:
