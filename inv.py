@@ -73,7 +73,7 @@ class Backpack:
 
         try:
             self.API.getBackpack(self.steamid)
-        except urllib2.HTTPError, urllib2.URLError, socket.error:
+        except (urllib2.HTTPError, urllib2.URLError, socket.error):
             #raise ValueError('503: Service Unavailable')
             #raise ValueError('The remote host closed the connection.')
             self.items = []
