@@ -7,6 +7,9 @@ import json
 import requests
 import tf2
 import urllib2 #for exception catching
+import time, datetime
+from toaster import toaster
+import WConio
 
 ignore_list = [x for x in [line.strip() for line in open('ignorelist.txt', 'r').readlines() if line[0] != '#'] if x]
 
@@ -117,10 +120,56 @@ if __name__ == '__main__':
     if '-all' in sys.argv:
         config = idler.Config()
         accounts = [config['accounts'][steamid]['steamcommunity'] for steamid in config['accounts']]
+        sys.argv.remove('-all')
     else:
         accounts = sys.argv[1:]
         if len(accounts) <= 0:
             raise SystemExit("We need some accounts here, bro.")
+
+    if '-watch' in sys.argv:
+        WConio.setcursortype(0)
+        accounts.remove('-watch')
+        #bps         = [[username, Backpack(username)] for username in accounts]
+        balloon     = toaster()
+        now         = datetime.datetime.now
+        lastdrop    = now()
+        
+        bps = {}
+
+        for username in accounts:
+            bps[username] = {'backpack':Backpack(username),
+                                   'founditems': []}
+            try: # check if there are any still unplaced items
+                bps[username]['founditems'] = bps[username]['backpack'].inventory(getunplaced=True)
+            except ValueError:
+                print "%s's unavailable at startup. This may be temporary."
+
+            if len(bps[username]['founditems'])>0:
+                print '{0} - Last item found: {1}'.format(now().strftime('%H:%M:%S'), bps[username]['founditems'][-1])
+
+        print 'Watching accounts: %s' % ','.join(accounts)
+        try:
+            while True:
+                currenttime = str(now()).split('.')[0]
+                sys.stdout.write(currenttime+'  \r' )
+                if not now().minute %10: #check every ten minutes (more or less)
+                    for username in accounts:
+                        try:
+                            newunplaced = bps[username]['backpack'].inventory(getunplaced=True)
+                        except ValueError: #503 unavailable
+                            newunplaced = []
+
+                        for found in [item for item in newunplaced if item not in username['founditems']]:
+                            print '%s - Found %s\n' % (currenttime, found) #change currenttime to reflect actual real time
+                            balloon.show_balloon('Your account {} has found a {}'.format(username, found))
+                            username['founditems'].append(found) #test
+                            lastdrop = lastdrop.now()
+                        newunplaced = []
+                time.sleep(.1)
+        except KeyboardInterrupt:
+            WConio.setcursortype(1)
+            balloon.Destroy()
+            raise SystemExit('Finished watching inventories!')
 
     if count:
         items = [Backpack(steamid).inventory(everything=True, ignorelist=False) for steamid in accounts]
