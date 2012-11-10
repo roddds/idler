@@ -138,6 +138,14 @@ if __name__ == '__main__':
                 items = Backpack(steamid).inventory(everything=everything)
             except ValueError as error:
                 raise SystemExit(error.message)
+            except ImportError:
+                try:
+                    os.remove('schema.en.json')
+                except OSError:
+                    pass
+
+                raise SystemExit("We couldn't read your schema file or the Steam Web API might be down. Check\n"+
+                "your API key and try again in a few minutes.")
 
             print "\n%s's inventory:" % steamid
             if len(items) > 0:
