@@ -1,53 +1,48 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Idler by roddds</title>
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="javascripts/respond.js"></script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <!--[if lt IE 8]>
-    <link rel="stylesheet" href="stylesheets/ie.css">
-    <![endif]-->
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="idler : Team Fortress 2 Idler" />
 
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>idler</title>
   </head>
+
   <body>
-      <div id="header">
-        <nav>
-          <li class="fork"><a href="https://github.com/roddds/idler">View On GitHub</a></li>
-          <li class="downloads"><a href="https://github.com/roddds/idler/zipball/master">ZIP</a></li>
-          <li class="downloads"><a href="https://github.com/roddds/idler/tarball/master">TAR</a></li>
-          <li class="title">DOWNLOADS</li>
-        </nav>
-      </div><!-- end header -->
 
-    <div class="wrapper">
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/roddds/idler">View on GitHub</a>
 
-      <section>
-        <div id="title">
-          <h1>Idler</h1>
-          <p>Team Fortress 2 Idler</p>
-          <hr>
-          <span class="credits left">Project maintained by <a href="https://github.com/roddds">roddds</a></span>
-          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
-        </div>
+          <h1 id="project_title">idler</h1>
+          <h2 id="project_tagline">Team Fortress 2 Idler</h2>
 
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/roddds/idler/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/roddds/idler/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
         <h1>Team Fortress 2 Idler</h1>
 
-<p>This is a simple script that makes it easier to idle with several Team Fortress 2 accounts, in sequence. Launch it through the command-line or via the <code>idler.py</code> file.</p>
+<p>This is a simple script that makes it easier to idle with several Team Fortress 2 accounts.
+Launch it through the command-line or via the <code>idler.py</code> file.</p>
 
 <h2>What this does:</h2>
 
 <h2><code>&gt; idler</code></h2>
 
 <ol>
-<li>Shows you a list of every account you added to the config file and lets you choose one (or several) for sequencial idling.<br>
+<li>Shows you a list of every account you added to the config file and lets
+you choose one (or several) for sequencial idling.<br>
 1.1 You can also press the <code>+</code> key on your keyboard to add accounts to a
 queue.</li>
 <li>Kills Steam, if it is running.</li>
@@ -62,7 +57,11 @@ output is also saved to a log file, default "<code>idling.log</code>".</li>
 <li>Kills Team Fortress 2.</li>
 <li>Kills Steam.</li>
 <li>Repeats the whole process with the next account.</li>
-</ol><h2><code>&gt; idler -login [accountname]</code></h2>
+</ol><p>Also, because of how the drop system in Team Fortress 2 works, the program is 
+able to detect if the account is drop-capped for this week and then skips to
+the next.</p>
+
+<h2><code>&gt; idler -login [accountname]</code></h2>
 
 <p>Kills Steam if it's running, and starts it with the account specified at
 [accountname].</p>
@@ -76,22 +75,31 @@ output is also saved to a log file, default "<code>idling.log</code>".</li>
 <p>Starts an idling session based on an already running TF2 session. The
 logged-in account is detected automatically.</p>
 
+<h2><code>&gt; idler -infinite</code></h2>
+
+<p>Idles with all of your accounts, in succession, until cancelled. Good if you
+have a large number of accounts.</p>
+
 <h2><code>&gt; inv [account | -all] [-full]</code></h2>
 
 <p>Shows the contents of the first page of 'account's inventory, or use <code>-all</code>
 to see the inventories of all accounts in your config file. You can also add
-the `-full' argument to see the whole inventory instead of only the first
+the <code>-full</code> argument to see the whole inventory instead of only the first
 page. Special drops like hats will have an asterisk preceding them. This
 command also accepts multiple account names, separated by space.</p>
 
 <h2><code>&gt; inv -all</code></h2>
 
-<p>Same as before, but for all of your accounts.</p>
+<p>Shows what's on the first page of all of your accounts' inventories.</p>
 
 <h2><code>&gt; inv -watch [account]</code></h2>
 
-<p>Watches for new drops at [account]'s inventory. This feature is actually
-broken and is not currently implemented.</p>
+<p>Watches for new drops at [account]'s inventory. You can also specify several
+different accounts.</p>
+
+<h2><code>&gt; inv -count [account | -all]</code></h2>
+
+<p>Shows the amount of every item in <code>[account]</code>'s backpack.</p>
 
 <hr><h2>What this does not:</h2>
 
@@ -107,51 +115,68 @@ want to stay on the safe side, don't run it.</p>
 
 <p>Files:</p>
 
-<pre><code>\idler.py          The actual script, plus some other functions. Launch this file.
+<pre><code>\idler.py          The actual script, plus some other functions. Launch
+                   this file.
 \idle.py           The launcher script.
 \inv.py            Tools for snooping on people's inventories.
 \tf2.py            Swixel's interface for Valve's TF2 Web API.
-\config.ini        Write the path to Steam, your API key and your username:passwords here.
+\config.ini        Write the path to Steam, your API key and your
+                   username:passwords here.
 \menu.py           Renders the menu you see after running idler.py.
-\idling.log        Stores information about drops and other activity on idler.
+\idling.log        Stores information about drops and other activity
+                   on idler.
 \README            This file.
-\ignorelist.txt    Add to this file names of items you don't care about (e.g Crates).
-                   Comes with a few examples you can delete or add your own.
-\updater.py        Retrieves the latest version of this program from github.com.
-\lastversion.txt   Contains information about the latest version of this program.
+\ignorelist.txt    Add to this file names of items you don't care about
+                   (e.g Crates). Comes with a few examples you can
+                   delete or add your own.
+\updater.py        Retrieves the latest version of this program from
+                   github.com.
+\lastversion.txt   Contains information about the latest version of this
+                   program.
 </code></pre>
 
-<p>Dependencies and Requirements:  </p>
+<hr><h2>Dependencies and Requirements:  </h2>
 
 <ul>
-<li><p>A Steam Web API key. You can get one at:<br><a href="http://steamcommunity.com/dev/apikey">http://steamcommunity.com/dev/apikey</a></p></li>
-<li><p>WConio<br><a href="http://newcenturycomputers.net/projects/wconio.html">http://newcenturycomputers.net/projects/wconio.html</a></p></li>
+<li><p>A Steam Web API key. You can get one at:
+<a href="http://steamcommunity.com/dev/apikey">http://steamcommunity.com/dev/apikey</a>  </p></li>
+<li><p>WConio
+<a href="http://newcenturycomputers.net/projects/wconio.html">http://newcenturycomputers.net/projects/wconio.html</a></p></li>
 <li><p>Python Win32 Extensions
 <a href="http://sourceforge.net/projects/pywin32/">http://sourceforge.net/projects/pywin32/</a></p></li>
-<li><p>The Requests Library<br><a href="http://docs.python-requests.org/en/latest/index.html">http://docs.python-requests.org/en/latest/index.html</a></p></li>
-<li><p>This software uses the <code>tf2webappy</code> library by Swixel (already included).<br><a href="https://github.com/swixel/tf2webappy">https://github.com/swixel/tf2webappy</a></p></li>
+<li><p>The Requests Library
+<a href="http://docs.python-requests.org/en/latest/index.html">http://docs.python-requests.org/en/latest/index.html</a></p></li>
+<li><p>This software uses the <code>tf2webappy</code> library by Swixel (already included).
+<a href="https://github.com/swixel/tf2webappy">https://github.com/swixel/tf2webappy</a></p></li>
 </ul><hr><h2>Example output from the log file:</h2>
 
-<pre><code>roddds - 2012-08-31 05:32:50:  Logging in with account roddds...
-roddds - 2012-08-31 05:34:27:  done!
-roddds - 2012-08-31 05:34:27:  Press Ctrl+C to finish idling. Hours until finished:
-roddds - 2012-08-31 06:40:01: 6:54:27 - Found   Scottish Handshake
-roddds - 2012-08-31 07:10:01: 6:24:27 - Found   Soda Popper
-roddds - 2012-08-31 07:50:01: 5:44:27 - Found   Equalizer
-roddds - 2012-08-31 08:50:01: 4:44:27 - Found * Dead Cone
-roddds - 2012-08-31 09:40:01: 3:54:27 - Found   Southern Hospitality
-roddds - 2012-08-31 11:20:01: 2:14:27 - Found   Red-Tape Recorder
-roddds - 2012-08-31 12:20:01: 1:14:27 - Found   Ali Baba's Wee Booties
-roddds - 2012-08-31 13:20:01: 0:14:27 - Found   Gunslinger
-roddds - 2012-08-31 13:34:28:  Closing Team Fortress...
-roddds - 2012-08-31 13:34:28:  Finished!
-roddds - 2012-08-31 13:34:28:  Closing Steam...
-roddds - 2012-08-31 13:34:28:  Finished idling for account roddds!
+<pre><code>2012-08-31 05:32:50:  Logging in with account roddds...
+2012-08-31 05:34:27:  done!
+2012-08-31 05:34:27:  Press Ctrl+C to finish idling. Hours until finished:
+2012-08-31 06:40:01: 6:54:27 - Found   Scottish Handshake
+2012-08-31 07:10:01: 6:24:27 - Found   Soda Popper
+2012-08-31 07:50:01: 5:44:27 - Found   Equalizer
+2012-08-31 08:50:01: 4:44:27 - Found * Dead Cone
+2012-08-31 09:40:01: 3:54:27 - Found   Southern Hospitality
+2012-08-31 11:20:01: 2:14:27 - Found   Red-Tape Recorder
+2012-08-31 12:20:01: 1:14:27 - Found   Ali Baba's Wee Booties
+2012-08-31 13:20:01: 0:14:27 - Found   Gunslinger
+2012-08-31 13:34:28:  Closing Team Fortress...
+2012-08-31 13:34:28:  Finished!
+2012-08-31 13:34:28:  Closing Steam...
+2012-08-31 13:34:28:  Finished idling for account roddds!
 </code></pre>
       </section>
-
     </div>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">idler maintained by <a href="https://github.com/roddds">roddds</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
               <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
@@ -162,6 +187,7 @@ roddds - 2012-08-31 13:34:28:  Finished idling for account roddds!
             pageTracker._trackPageview();
             } catch(err) {}
           </script>
+
 
   </body>
 </html>
