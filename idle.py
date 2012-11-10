@@ -72,13 +72,11 @@ class idle: #temporary name
         self.config       = idler.Config()
         self.log          = Log(self.config['logfile'], self.username)
 
-
         steamid, password = self.config['accounts'][username].itervalues()
         steampath         = os.path.exists(self.config['steampath'])
         self.inventory    = inv.Backpack(self.config['accounts'][username]['steamcommunity'])
         self.tf2running   = False
         self.start        = now()
-
 
         self.idle()
 
@@ -108,6 +106,8 @@ class idle: #temporary name
                 time.sleep(0.1)                  # I don't like that this try:except repeats. TODO find some other way
         except KeyboardInterrupt:
             self.log.write('Countdown aborted!')
+            kill('Steam.exe')
+            kill('hl2.exe')
             return
 
         try:
@@ -123,12 +123,12 @@ class idle: #temporary name
                     self.start = now()
         except KeyboardInterrupt:
             self.log.write('Countdown aborted!')
+            kill('Steam.exe')
+            kill('hl2.exe')
             return
 
         self.log.write('done!')
-
         self.tf2running = True
-
         return True
 
     def idle(self):
@@ -139,8 +139,10 @@ class idle: #temporary name
         timeleft       = self.start+datetime.timedelta(hours=hours)
         lastdrop       = now()  # set lastdrop time to startup time
 
+        self.startup()
+
         if not self.tf2running:
-            self.startup()
+            return
 
         try: # check if there are any still unplaced items
             founditems = self.inventory(getunplaced=True)
