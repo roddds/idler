@@ -10,6 +10,7 @@ import urllib2 #for exception catching
 import time, datetime
 from toaster import toaster
 import WConio
+import socket
 
 ignore_list = [x for x in [line.strip() for line in open('ignorelist.txt', 'r').readlines() if line[0] != '#'] if x]
 
@@ -72,10 +73,11 @@ class Backpack:
 
         try:
             self.API.getBackpack(self.steamid)
-        except urllib2.HTTPError as error:
-            raise ValueError('503: Service Unavailable')
-        except urllib2.URLError:
-            raise ValueError('The remote host closed the connection.')
+        except urllib2.HTTPError, urllib2.URLError, socket.error:
+            #raise ValueError('503: Service Unavailable')
+            #raise ValueError('The remote host closed the connection.')
+            self.items = []
+            return self.items
 
         weapons = [x['item_name'] for x in self.API.schema['result']['items']['item'] if x.get('craft_class') == 'weapon' or x.get('craft_material_type') == 'weapon']
         items = self.API.users[self.steamid]['backpack'].matrix
