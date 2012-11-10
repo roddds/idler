@@ -91,8 +91,8 @@ class Idler:
             usernames = menu( ['Idle with all accounts'] + sorted(list(self.config['accounts'].iterkeys())) + ['Exit'] )
 
             if usernames == ['Idle with all accounts']:
-                for name in [name for name in self.config['accounts'].iterkeys()]:
-                    idle.idle(name)
+                for username in [name for name in self.config['accounts'].iterkeys()]:
+                    idle.idle(username)
 
                 print 'Finished idling for all accounts!'
             elif (usernames == 'Exit') or ('Exit' in usernames):
