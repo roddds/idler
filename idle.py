@@ -152,7 +152,7 @@ class idle: #temporary name
             self.log.stdout('- Backpack unavailable at startup. This may be temporary.\n')
             founditems = []
 
-        self.log.write("Press Ctrl+C to finish idling. I'll be done at around %s" % timeleft.strftime('%H:%M:%S'))
+        self.log.write("Press Ctrl+C to finish idling with %s. I'll be done at around %s" % (self.username, timeleft.strftime('%H:%M:%S')))
         
         Continue = True
 
