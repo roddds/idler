@@ -27,6 +27,10 @@ output is also saved to a log file, default "`idling.log`".
 8. Kills Steam.
 9. Repeats the whole process with the next account.
 
+Also, because of how the drop system in Team Fortress 2 works, the program is 
+able to detect if the account is drop-capped for this week and then skips to
+the next.
+
 
 `> idler -login [accountname]`
 ------------------------------
@@ -45,25 +49,36 @@ Starts idling with the currently logged in account.
 Starts an idling session based on an already running TF2 session. The
 logged-in account is detected automatically.
 
+`> idler -infinite`
+-------------------
+
+Idles with all of your accounts, in succession, until cancelled. Good if you
+have a large number of accounts.
+
 `> inv [account | -all] [-full]`
 --------------------------------
 
 Shows the contents of the first page of 'account's inventory, or use `-all`
 to see the inventories of all accounts in your config file. You can also add
-the `-full' argument to see the whole inventory instead of only the first
+the `-full` argument to see the whole inventory instead of only the first
 page. Special drops like hats will have an asterisk preceding them. This
 command also accepts multiple account names, separated by space.
 
 `> inv -all`
 ------------
 
-Same as before, but for all of your accounts.
+Shows what's on the first page of all of your accounts' inventories.
 
 `> inv -watch [account]`
 ------------------------
 
- Watches for new drops at [account]'s inventory. This feature is actually
-broken and is not currently implemented.
+Watches for new drops at [account]'s inventory. You can also specify several
+different accounts.
+ 
+`> inv -count [account | -all]`
+-------------------------------
+
+Shows the amount of every item in `[account]`'s backpack.
 
 
 -------------------
@@ -84,55 +99,60 @@ want to stay on the safe side, don't run it.
 
 Files:
 
-    \idler.py          The actual script, plus some other functions. Launch this file.
+    \idler.py          The actual script, plus some other functions. Launch
+                       this file.
     \idle.py           The launcher script.
     \inv.py            Tools for snooping on people's inventories.
     \tf2.py            Swixel's interface for Valve's TF2 Web API.
-    \config.ini        Write the path to Steam, your API key and your username:passwords here.
+    \config.ini        Write the path to Steam, your API key and your
+                       username:passwords here.
     \menu.py           Renders the menu you see after running idler.py.
-    \idling.log        Stores information about drops and other activity on idler.
+    \idling.log        Stores information about drops and other activity
+                       on idler.
     \README            This file.
-    \ignorelist.txt    Add to this file names of items you don't care about (e.g Crates).
-                       Comes with a few examples you can delete or add your own.
-    \updater.py        Retrieves the latest version of this program from github.com.
-    \lastversion.txt   Contains information about the latest version of this program.
+    \ignorelist.txt    Add to this file names of items you don't care about
+                       (e.g Crates). Comes with a few examples you can
+                       delete or add your own.
+    \updater.py        Retrieves the latest version of this program from
+                       github.com.
+    \lastversion.txt   Contains information about the latest version of this
+                       program.
 
+------------------------------
 Dependencies and Requirements:  
+------------------------------
 
-- A Steam Web API key. You can get one at:  
-http://steamcommunity.com/dev/apikey
+- A Steam Web API key. You can get one at:
+http://steamcommunity.com/dev/apikey  
 
-- WConio  
+- WConio
 http://newcenturycomputers.net/projects/wconio.html
-
 
 - Python Win32 Extensions
 http://sourceforge.net/projects/pywin32/
 
-
-- The Requests Library  
+- The Requests Library
 http://docs.python-requests.org/en/latest/index.html
 
-
--  This software uses the `tf2webappy` library by Swixel (already included).  
+- This software uses the `tf2webappy` library by Swixel (already included).
 https://github.com/swixel/tf2webappy
 
 ---------------------------------
 Example output from the log file:
 ---------------------------------
 
-    roddds - 2012-08-31 05:32:50:  Logging in with account roddds...
-    roddds - 2012-08-31 05:34:27:  done!
-    roddds - 2012-08-31 05:34:27:  Press Ctrl+C to finish idling. Hours until finished:
-    roddds - 2012-08-31 06:40:01: 6:54:27 - Found   Scottish Handshake
-    roddds - 2012-08-31 07:10:01: 6:24:27 - Found   Soda Popper
-    roddds - 2012-08-31 07:50:01: 5:44:27 - Found   Equalizer
-    roddds - 2012-08-31 08:50:01: 4:44:27 - Found * Dead Cone
-    roddds - 2012-08-31 09:40:01: 3:54:27 - Found   Southern Hospitality
-    roddds - 2012-08-31 11:20:01: 2:14:27 - Found   Red-Tape Recorder
-    roddds - 2012-08-31 12:20:01: 1:14:27 - Found   Ali Baba's Wee Booties
-    roddds - 2012-08-31 13:20:01: 0:14:27 - Found   Gunslinger
-    roddds - 2012-08-31 13:34:28:  Closing Team Fortress...
-    roddds - 2012-08-31 13:34:28:  Finished!
-    roddds - 2012-08-31 13:34:28:  Closing Steam...
-    roddds - 2012-08-31 13:34:28:  Finished idling for account roddds!
+    2012-08-31 05:32:50:  Logging in with account roddds...
+    2012-08-31 05:34:27:  done!
+    2012-08-31 05:34:27:  Press Ctrl+C to finish idling. Hours until finished:
+    2012-08-31 06:40:01: 6:54:27 - Found   Scottish Handshake
+    2012-08-31 07:10:01: 6:24:27 - Found   Soda Popper
+    2012-08-31 07:50:01: 5:44:27 - Found   Equalizer
+    2012-08-31 08:50:01: 4:44:27 - Found * Dead Cone
+    2012-08-31 09:40:01: 3:54:27 - Found   Southern Hospitality
+    2012-08-31 11:20:01: 2:14:27 - Found   Red-Tape Recorder
+    2012-08-31 12:20:01: 1:14:27 - Found   Ali Baba's Wee Booties
+    2012-08-31 13:20:01: 0:14:27 - Found   Gunslinger
+    2012-08-31 13:34:28:  Closing Team Fortress...
+    2012-08-31 13:34:28:  Finished!
+    2012-08-31 13:34:28:  Closing Steam...
+    2012-08-31 13:34:28:  Finished idling for account roddds!
