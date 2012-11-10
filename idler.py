@@ -82,7 +82,7 @@ class Idler:
             
             while True:
                 for username in sorted(list(self.config['accounts'].iterkeys())):
-                    idle.startup(username, self.config)
+                    idle.idle(username, self.config)
 
         else: #no valid arguments
             WConio.setcursortype(0)
@@ -92,7 +92,7 @@ class Idler:
 
             if usernames == ['Idle with all accounts']:
                 for name in [name for name in self.config['accounts'].iterkeys()]:
-                    idle(name)
+                    idle.idle(name, self.config)
 
                 print 'Finished idling for all accounts!'
             elif (usernames == 'Exit') or ('Exit' in usernames):
