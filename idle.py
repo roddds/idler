@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import win32com.client
+import pywin
 import idler
 import inv
 from menu import menu
@@ -53,8 +55,15 @@ def isrunning(processname):
     '''
     Returns True or False depending on if processname is running or not.
     '''
-    lines = sp.Popen(['tasklist'], stdout=sp.PIPE).stdout.read().lower().split('\r\n')
+    try:
+        lines = sp.Popen(['tasklist'], stdout=sp.PIPE).stdout.read().lower().split('\r\n')
+    except WindowsError: #windows XP fallback mode
+        wmi = win32com.client.GetObject('winmgmts:')
+        procs = wmi.instancesOf('Win32_Process')
+        lines = [proc.Properties_('Caption').Value for proc in procs]
+    
     return any(line.startswith(processname.lower()) for line in lines)
+
 
 
 def kill(processname):
