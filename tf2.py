@@ -73,8 +73,11 @@ def _decimal_to_binary(i):
 
 def _binary_to_decimal(b):
     """ simple, and yet fun """
-    b=str(b);d=0;l=len(b)
-    for i in xrange(l):d=d+(int(b[i])*pow(2,((l-i)-1)))
+    b=str(b)
+    d=0
+    l=len(b)
+    for i in xrange(l):
+        d = d+(int(b[i])*pow(2,((l-i)-1)))
     return d
 
 class Loadout(object):
@@ -174,12 +177,14 @@ class Backpack(object):
                 self.loadouts[c].load(d['item_slot'],d['item_name'])
             d['equipped'] = True if(len(equipped)>0) else False
             pos = self._loc_to_xy(i[16:])
+
             d['slot'] = pos
             d['quantity'] = item['quantity']
             d['quality'] = item['quality']
             d['level'] = item['level']
             d['img'] = schema_data['image_inventory'].split("/")[-1]
-            if(pos == 0):
+            # if(pos == 0):
+            if i[1] == '1':
                 self.unplaced.append(d)
             else:
                 self.matrix["Slot %s" % str(pos).rjust(3,'0')] = {'data':d,'position':{'page': pos/50,'row':pos/10,'column':pos%10}}

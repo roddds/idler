@@ -4,6 +4,7 @@ import itertools
 import idler
 import sys
 import json
+import os
 import requests
 import tf2
 import urllib2 #for exception catching
@@ -48,7 +49,7 @@ class Backpack:
             req.encoding = 'latin1'
         except (requests.exceptions.ConnectionError, requests.exceptions.Timeout):
             raise ValueError("We were unable to retrieve %s's info. The SteamAPI may be down - please try again shortly." % username)
-            
+           
         if not req.ok:
             raise ValueError("We were unable to retrieve that user's backpack. The URL may be wrong or the SteamAPI may be down.")
 

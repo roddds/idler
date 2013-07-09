@@ -12,7 +12,7 @@ def update():
         currentversion = ''
 
     try:
-        version = requests.get(reponifo).json['pushed_at']
+        version = requests.get(reponifo).json()['pushed_at']
     except requests.exceptions.ConnectionError:
         print "Updater couldn't connect to the update server (github.com)"
         return False
