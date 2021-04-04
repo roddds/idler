@@ -9,7 +9,9 @@ import os
 import subprocess as sp
 import sys
 import time, datetime
-now = datetime.datetime.now
+
+
+now = datetime.datetime.now()
 
 
 if __name__ == '__main__':
